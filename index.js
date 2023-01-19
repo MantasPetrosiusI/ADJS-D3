@@ -15,7 +15,7 @@ renderBooks = (books) => {
   books.forEach((book) => {
     row.innerHTML += `
     <div class="col col-sm-6 col-md-4 col-lg-3 m-4 border border-1">
-        <div class="card">
+        <div class="card border-0">
             <img src="${book.img}" class="card-img-top mt-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title">${book.title}</h3>
@@ -23,7 +23,7 @@ renderBooks = (books) => {
                 <h6 class="card-price">${book.price}</h6>
 
                 <button type="button" class="btn btn-primary" onClick="addToCart(this)">Add to Cart</button>
-                <button type="button" class="btn btn-danger" onClick="skip()">Skip</button>
+                <button type="button" class="btn btn-danger" onClick="skip(this)">Skip</button>
             </div>
         </div>
     </div>
@@ -32,24 +32,28 @@ renderBooks = (books) => {
 };
 
 const addToCart = (button) => {
-  let booksInCart = document.querySelector("ul");
-  let selectedBook = button.closest(".card").innerHTML;
-  booksInCart.innerHTML += `<li>${selectedBook}</li>`;
+  let booksInCart = document.querySelector(".list-group");
+  let selectedBook = button.closest(".col ").innerHTML;
+  button.closest(".col ").classList.add("border-success");
+  booksInCart.innerHTML += `<li class="list-group-item">
+${selectedBook}</li>`;
 };
 
-function skip() {}
+const skip = (button) => {
+  button.closest(".col ").style.display = "none";
+};
 
-const skipBook = (window.onload = getBooks());
+input = document.getElementById("search");
+
+const filterBooks = () => {};
+
+window.onload = getBooks();
 /*///////////////////////////////////////////////////////////////////////
 An input field to filter the books
  
 
 Tasks you need to perform to achieve those requirements:
 
-Add an add to cart button into each item
-When this button is pressed: 1) add the item to another list (the cart), and 2) change the card styling to show that the element is in the cart (eg. red border, a badge, an icon… you choose)
-Add a skip button inside each card
-When pressed, this button should remove that book element from the page
 Add a search bar. When the user types more than 3 characters, filter the content of the API response to only display the books with a matching (or partially matching) title (hint: use .filter())
 EXTRAS:
 Allow users to delete books from their cart
